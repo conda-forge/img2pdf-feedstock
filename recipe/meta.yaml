@@ -10,7 +10,7 @@ source:
   sha256: 9d77c17ee65a736abe92ef8cba9cca009c064ea4ed74492c01aea596e41856cf
 
 build:
-  number: 0
+  number: 1
   script: "{{ PYTHON }} -m pip install . -vv"
   entry_points:
     - img2pdf = img2pdf:main
