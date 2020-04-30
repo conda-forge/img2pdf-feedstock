@@ -1,5 +1,5 @@
 {% set name = "img2pdf" %}
-{% set version = "0.3.3" %}
+{% set version = "0.3.6" %}
 
 package:
   name: {{ name|lower }}
@@ -7,11 +7,11 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 9d77c17ee65a736abe92ef8cba9cca009c064ea4ed74492c01aea596e41856cf
+  sha256: 8cd5509a60b75f4442b897bad3d593e25ebd314105f3034a8f17def396a4a0fb
 
 build:
   number: 0
-  script: "{{ PYTHON }} -m pip install . -vv"
+  script: {{ PYTHON }} -m pip install . -vv
   entry_points:
     - img2pdf = img2pdf:main
 
@@ -35,7 +35,7 @@ about:
   license: LGPL-3.0
   license_family: LGPL
   license_file: LICENSE
-  summary: 'Lossless conversion of raster images to PDF'
+  summary: Lossless conversion of raster images to PDF
   description: |
     Lossless conversion of raster images to PDF. You should use img2pdf if your priorities
     are (in this order):
