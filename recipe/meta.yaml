@@ -1,5 +1,5 @@
 {% set name = "img2pdf" %}
-{% set version = "0.3.3" %}
+{% set version = "0.3.6" %}
 
 package:
   name: {{ name|lower }}
@@ -7,10 +7,11 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 9d77c17ee65a736abe92ef8cba9cca009c064ea4ed74492c01aea596e41856cf
+  sha256: 8cd5509a60b75f4442b897bad3d593e25ebd314105f3034a8f17def396a4a0fb
 
 build:
-  number: 0
+  number: 1
+  skip: true  # [python_impl == 'pypy']
   script: "{{ PYTHON }} -m pip install . -vv"
   entry_points:
     - img2pdf = img2pdf:main
@@ -32,7 +33,7 @@ test:
 
 about:
   home: https://gitlab.mister-muffin.de/josch/img2pdf
-  license: LGPL-3.0
+  license: LGPL-3.0-only
   license_family: LGPL
   license_file: LICENSE
   summary: 'Lossless conversion of raster images to PDF'
@@ -46,4 +47,4 @@ about:
 
 extra:
   recipe-maintainers:
-    - dougalsutherland
+    - djsutherland
