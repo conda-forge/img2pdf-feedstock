@@ -3,7 +3,7 @@ About img2pdf
 
 Home: https://gitlab.mister-muffin.de/josch/img2pdf
 
-Package license: LGPL-3.0
+Package license: LGPL-3.0-only
 
 Feedstock license: BSD 3-Clause
 
@@ -203,5 +203,5 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
-* [@dougalsutherland](https://github.com/dougalsutherland/)
+* [@djsutherland](https://github.com/djsutherland/)
 
