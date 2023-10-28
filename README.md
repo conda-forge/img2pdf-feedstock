@@ -1,11 +1,11 @@
-About img2pdf
-=============
+About img2pdf-feedstock
+=======================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/img2pdf-feedstock/blob/main/LICENSE.txt)
 
 Home: https://gitlab.mister-muffin.de/josch/img2pdf
 
 Package license: LGPL-3.0-only
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/img2pdf-feedstock/blob/main/LICENSE.txt)
 
 Summary: Lossless conversion of raster images to PDF
 
