@@ -10,7 +10,7 @@ source:
   sha256: 85a89b8abdeef9ef033508aed0d9f1e84fd6d0130e864e2c523f948ec45365e1
 
 build:
-  number: 0
+  number: 1
   skip: true  # [python_impl == 'pypy']
   script: {{ PYTHON }} -m pip install . -vv
   entry_points:
@@ -23,10 +23,10 @@ requirements:
   host:
     - python
     - pip
+    - setuptools
   run:
     - python
     - pillow
-    - enum34  # [py<34]
 
 test:
   imports:
