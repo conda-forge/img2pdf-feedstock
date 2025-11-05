@@ -1,5 +1,5 @@
 {% set name = "img2pdf" %}
-{% set version = "0.6.1" %}
+{% set version = "0.6.2" %}
 
 package:
   name: {{ name|lower }}
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 306e279eb832bc159d7d6294b697a9fbd11b4be1f799b14b3b2174fb506af289
+  sha256: 9058b77395cda162d601f888d71e03db01c884ffc51b385f3571715b80f51801
 
 build:
-  number: 1
+  number: 0
   skip: true  # [python_impl == 'pypy']
   script: {{ PYTHON }} -m pip install . -vv
   entry_points:
