@@ -2,6 +2,12 @@ schema_version: 1
 
 context:
   version: "0.6.3"
+  skip_tests:
+    # require icc profiles, not packaged on conda-forge
+    # (we also need to patch ICC profile paths to respect CONDA_PREFIX)
+    - "--deselect src/img2pdf_test.py::test_date"
+    # https://gitlab.mister-muffin.de/josch/img2pdf/issues/178
+    - "--deselect src/img2pdf_test.py::test_miff_cmyk16"
 
 package:
   name: img2pdf
@@ -38,10 +44,27 @@ tests:
       python_version:
         - ${{ python_min }}.*
         - "*"
-  - script:
+  - requirements:
+      run:
+        - pytest
+        - pytest-xdist
+        # python packages
+        - numpy
+        - pdfrw
+        - scipy
+        # tools
+        - exiftool
+        - imagemagick
+        - netpbm
+        - poppler
+    files:
+      source:
+        - src/
+    script:
       - img2pdf --help
       # no help option, starts the GUI immediately:
       # - img2pdf-gui --help
+      - pytest -nauto ${{ skip_tests | join(' ') }}
 
 about:
   license: LGPL-3.0-only
