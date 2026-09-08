@@ -1,11 +1,10 @@
 schema_version: 1
 
 context:
-  name: img2pdf
   version: "0.6.3"
 
 package:
-  name: ${{ name|lower }}
+  name: img2pdf
   version: ${{ version }}
 
 source:
@@ -13,26 +12,21 @@ source:
   sha256: 219518020f5bd242bdc46493941ea3f756f664c2e86f2454721e74353f58cd95
 
 build:
-  number: 2
-  skip: python_impl == 'pypy'
-  script: ${{ PYTHON }} -m pip install . -vv
+  number: 0
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   python:
     entry_points:
       - img2pdf = img2pdf:main
       - img2pdf-gui = img2pdf:gui
 
 requirements:
-  build:
-    - if: build_platform != target_platform
-      then:
-        - python
-        - cross-python_${{ target_platform }}
   host:
-    - python
+    - python ${{ python_min }}.*
     - flit-core >=3.2,<4
     - pip
   run:
-    - python
+    - python >=${{ python_min }}
     - pillow
     - pikepdf
 
@@ -41,6 +35,9 @@ tests:
       imports:
         - img2pdf
       pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
   - script:
       - img2pdf --help
       # no help option, starts the GUI immediately:
