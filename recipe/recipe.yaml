@@ -2,15 +2,15 @@ schema_version: 1
 
 context:
   name: img2pdf
-  version: "0.6.1"
+  version: "0.6.3"
 
 package:
   name: ${{ name|lower }}
   version: ${{ version }}
 
 source:
-  url: https://files.pythonhosted.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
-  sha256: 306e279eb832bc159d7d6294b697a9fbd11b4be1f799b14b3b2174fb506af289
+  url: https://pypi.org/packages/source/i/img2pdf/img2pdf-${{ version }}.tar.gz
+  sha256: 219518020f5bd242bdc46493941ea3f756f664c2e86f2454721e74353f58cd95
 
 build:
   number: 2
@@ -19,6 +19,7 @@ build:
   python:
     entry_points:
       - img2pdf = img2pdf:main
+      - img2pdf-gui = img2pdf:gui
 
 requirements:
   build:
@@ -28,19 +29,22 @@ requirements:
         - cross-python_${{ target_platform }}
   host:
     - python
+    - flit-core >=3.2,<4
     - pip
-    - setuptools
   run:
     - python
     - pillow
+    - pikepdf
 
 tests:
   - python:
       imports:
         - img2pdf
-      pip_check: false
+      pip_check: true
   - script:
       - img2pdf --help
+      # no help option, starts the GUI immediately:
+      # - img2pdf-gui --help
 
 about:
   license: LGPL-3.0-only
@@ -53,7 +57,6 @@ about:
     1. always lossless: the image embedded in the PDF will always have the exact same color information for every pixel as the input
     2. small: if possible, the difference in filesize between the input image and the output PDF will only be the overhead of the PDF container itself
     3 fast: if possible, the input image is just pasted into the PDF document as-is without any CPU hungry re-encoding of the pixel data
-
 
   homepage: https://gitlab.mister-muffin.de/josch/img2pdf
 
