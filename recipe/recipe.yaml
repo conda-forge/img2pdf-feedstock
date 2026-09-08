@@ -1,0 +1,88 @@
+schema_version: 1
+
+context:
+  version: "0.6.3"
+  skip_tests:
+    # require icc profiles, not packaged on conda-forge
+    # (we also need to patch ICC profile paths to respect CONDA_PREFIX)
+    - "--deselect src/img2pdf_test.py::test_date"
+    # https://gitlab.mister-muffin.de/josch/img2pdf/issues/178
+    - "--deselect src/img2pdf_test.py::test_miff_cmyk16"
+
+package:
+  name: img2pdf
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/i/img2pdf/img2pdf-${{ version }}.tar.gz
+  sha256: 219518020f5bd242bdc46493941ea3f756f664c2e86f2454721e74353f58cd95
+
+build:
+  number: 0
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  python:
+    entry_points:
+      - img2pdf = img2pdf:main
+      - img2pdf-gui = img2pdf:gui
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - flit-core >=3.2,<4
+    - pip
+  run:
+    - python >=${{ python_min }}
+    - pillow
+    - pikepdf
+
+tests:
+  - python:
+      imports:
+        - img2pdf
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
+  - requirements:
+      run:
+        - pytest
+        - pytest-xdist
+        # python packages
+        - numpy
+        - pdfrw
+        - scipy
+        # tools
+        - exiftool
+        - imagemagick
+        - netpbm
+        - poppler
+    files:
+      source:
+        - src/
+    script:
+      - img2pdf --help
+      # no help option, starts the GUI immediately:
+      # - img2pdf-gui --help
+      - pytest -nauto ${{ skip_tests | join(' ') }}
+
+about:
+  license: LGPL-3.0-only
+  license_file: LICENSE
+  summary: Lossless conversion of raster images to PDF
+  description: |
+    Lossless conversion of raster images to PDF. You should use img2pdf if your priorities
+    are (in this order):
+
+    1. always lossless: the image embedded in the PDF will always have the exact same color information for every pixel as the input
+    2. small: if possible, the difference in filesize between the input image and the output PDF will only be the overhead of the PDF container itself
+    3 fast: if possible, the input image is just pasted into the PDF document as-is without any CPU hungry re-encoding of the pixel data
+
+  homepage: https://gitlab.mister-muffin.de/josch/img2pdf
+
+extra:
+  recipe-maintainers:
+    - jonashaag
+    - izahn
+    - djsutherland
+    - mgorny
